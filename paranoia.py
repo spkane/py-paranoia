@@ -38,7 +38,7 @@ usage: paranoia
 
 '''
 
-__author__     = 'Sean P. Kane <spk00@cox.net>'
+__author__     = 'Sean P. Kane'
 __date__       = '01/12/2005'
 __version__    = '1.3.1'
 __copyright__  = '''
