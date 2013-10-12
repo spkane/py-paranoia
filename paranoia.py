@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 #
 #
 # -*- encoding = 'utf-8' -*-
@@ -11,6 +11,10 @@
 #
 # HISTORY
 # =======
+#
+# 1.3.2 - 11 Oct 2013
+# + Remove spurious lines from "stats" display.
+# + Allow stats to be displayed in choice selection.
 #
 # 1.3.1 - 12 Jan 2005
 # + Minor fix to import statements
@@ -39,8 +43,8 @@ usage: paranoia
 '''
 
 __author__     = 'Sean P. Kane'
-__date__       = '01/12/2005'
-__version__    = '1.3.1'
+__date__       = '2013-10-11'
+__version__    = '1.3.2'
 __copyright__  = '''
 This is a solo paranoia game taken from the Jan/Feb issue (No 77) of
 SpaceGamer/FantasyGamer magazine.
@@ -150,6 +154,10 @@ THE END
                not hasattr(self, "page%s" % choice)):
             print choice_prompt
             choice = raw_input("Type choice and press <Enter> to continue: ")
+            if choice == 'p':
+                print
+                self.character()
+                self.more()
         print
         return letter_page_map.get(choice) or getattr(self, "page%s" % choice)
 
@@ -181,7 +189,6 @@ HOW TO PLAY:
     def character(self):
         print """\
 ===============================================================================
-The
 The Character : Philo-R-DMD %s
 Primary Attributes                      Secondary Attributes
 ===============================================================================
@@ -203,8 +210,7 @@ Equipment: Red Reflec Armour, Laser Pistol, Laser Barrel (red),
           Notebook & Stylus, Knife, Com Unit 1, Jump suit,
           Secret Illuminati Eye-In-The-Pyramid(tm) Decoder ring,
           Utility Belt & Pouches
-===============================================================================
-""" % self.clone
+===============================================================================""" % self.clone
 
     def page1(self):
         print """\
