@@ -1125,6 +1125,7 @@ def main(args):
        savefilename = None
 
    if os.path.exists(savefilename):
+        print "Loading from %s" % savefilename
         pickled_file = open(savefilename, 'rb')
         game = pickle.load(pickled_file)
         pickled_file.close()
