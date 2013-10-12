@@ -13,7 +13,7 @@
 # =======
 #
 # 1.3.2 - 11 Oct 2013
-# + Remove spurious line from "stats" display.
+# + Remove spurious lines from "stats" display.
 #
 # 1.3.1 - 12 Jan 2005
 # + Minor fix to import statements
@@ -205,8 +205,7 @@ Equipment: Red Reflec Armour, Laser Pistol, Laser Barrel (red),
           Notebook & Stylus, Knife, Com Unit 1, Jump suit,
           Secret Illuminati Eye-In-The-Pyramid(tm) Decoder ring,
           Utility Belt & Pouches
-===============================================================================
-""" % self.clone
+===============================================================================""" % self.clone
 
     def page1(self):
         print """\
