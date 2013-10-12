@@ -14,6 +14,7 @@
 #
 # 1.3.2 - 11 Oct 2013
 # + Remove spurious lines from "stats" display.
+# + Allow stats to be displayed in choice selection.
 #
 # 1.3.1 - 12 Jan 2005
 # + Minor fix to import statements
@@ -153,6 +154,10 @@ THE END
                not hasattr(self, "page%s" % choice)):
             print choice_prompt
             choice = raw_input("Type choice and press <Enter> to continue: ")
+            if choice == 'p':
+                print
+                self.character()
+                self.more()
         print
         return letter_page_map.get(choice) or getattr(self, "page%s" % choice)
 
