@@ -103,7 +103,10 @@ class Game(object):
         self.more()
         self.character()
         self.more()
-        nextpage = self.page1
+        self.run()
+
+    def run(self, nextpage_name='page1'):
+        nextpage = getattr(self, nextpage_name)
         while nextpage is not None:
             print "-"*79
             nextpage = nextpage()
@@ -1125,10 +1128,7 @@ def main(args):
         pickled_file = open(savefilename, 'rb')
         game = pickle.load(pickled_file)
         pickled_file.close()
-        nextpage = getattr(game, game.nextpage)
-        while nextpage is not None:
-            print "-"*79
-            nextpage = nextpage()
+        game.run(nextpage_name=game.nextpage)
    else:
        game = Game(savefilename)
    
