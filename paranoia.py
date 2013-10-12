@@ -12,6 +12,9 @@
 # HISTORY
 # =======
 #
+# 1.3.2 - 11 Oct 2013
+# + Remove spurious line from "stats" display.
+#
 # 1.3.1 - 12 Jan 2005
 # + Minor fix to import statements
 #
@@ -39,8 +42,8 @@ usage: paranoia
 '''
 
 __author__     = 'Sean P. Kane'
-__date__       = '01/12/2005'
-__version__    = '1.3.1'
+__date__       = '2013-10-11'
+__version__    = '1.3.2'
 __copyright__  = '''
 This is a solo paranoia game taken from the Jan/Feb issue (No 77) of
 SpaceGamer/FantasyGamer magazine.
@@ -181,7 +184,6 @@ HOW TO PLAY:
     def character(self):
         print """\
 ===============================================================================
-The
 The Character : Philo-R-DMD %s
 Primary Attributes                      Secondary Attributes
 ===============================================================================
