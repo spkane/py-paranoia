@@ -60,6 +60,7 @@ Andy Gimblett, Scott David Daniels, and Steven Bethard.
 
 This is a public domain adventure and may not be sold for profit'''
 
+import os
 import sys
 
 #if sys.version_info[0:1] >= (2,4):
@@ -68,6 +69,7 @@ import sys
 import random
 import string
 import optparse
+import pickle
 
 
 
@@ -75,7 +77,9 @@ def _dice_roll(num,sides):
     return sum(random.randrange(sides) for _ in range(num)) + num 
 
 class Game(object):
-    def __init__(self):
+    def __init__(self, savefilename=None):
+        self.savefilename = savefilename
+
         # initialize stats
         self.moxie = 13
         self.agility = 15
@@ -99,10 +103,21 @@ class Game(object):
         self.more()
         self.character()
         self.more()
-        nextpage = self.page1
+        self.run()
+
+    def run(self, nextpage_name='page1'):
+        nextpage = getattr(self, nextpage_name)
         while nextpage is not None:
             print "-"*79
             nextpage = nextpage()
+
+    def save(self, start_func, savefilename=None):
+        savefilename = self.savefilename or savefilename
+        self.nextpage = start_func
+        print "Saving to %s" % savefilename
+        pickled_file = open(savefilename, 'wb')
+        pickle.dump(self, pickled_file)
+        pickled_file.close()
 
     def more(self, page=None):
         while True:
@@ -138,6 +153,8 @@ THE END
         return self.more(page)
 
     def choose(self, *args):
+        # from http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/66062
+        caller_method_name = sys._getframe(1).f_code.co_name
         assert len(args) % 2 == 0
         assert len(args) >= 4
         pages, descriptions = args[::2], args[1::2]
@@ -157,6 +174,10 @@ THE END
             if choice == 'p':
                 print
                 self.character()
+                self.more()
+            elif choice == 's':
+                print
+                self.save(caller_method_name)
                 self.more()
         print
         return letter_page_map.get(choice) or getattr(self, "page%s" % choice)
@@ -1092,13 +1113,25 @@ folder on the table top, but you can't make out the lettering on it.
 
 def main(args):
    '''Main Game Execution'''
-   usage = "usage: %prog [options]"
+   usage = "usage: %prog [options] [savefilename]"
    version = "%prog " + __version__
    parser = optparse.OptionParser(usage=usage, version=version)
 
    (options, args) = parser.parse_args()
-   
-   game = Game()
+   print (options, args)
+   if args:
+       savefilename = args[0]
+   else:
+       savefilename = None
+
+   if os.path.exists(savefilename):
+        print "Loading from %s" % savefilename
+        pickled_file = open(savefilename, 'rb')
+        game = pickle.load(pickled_file)
+        pickled_file.close()
+        game.run(nextpage_name=game.nextpage)
+   else:
+       game = Game(savefilename)
    
 if __name__ == '__main__':
    main(sys.argv[1:])
