@@ -4,8 +4,8 @@
 # -*- encoding = 'utf-8' -*-
 #
 #
-# Command Line GCS Upgrade Application
-# ====================================
+# py-paranoia
+# ===========
 # This is a port of paranoia from the old bsd-games package.
 #
 #
